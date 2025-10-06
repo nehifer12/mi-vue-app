@@ -77,26 +77,21 @@ export default {
       const user = baseDatos.findUser(this.email, this.password);
 
       if (user) {
-        // Guardar preferencias en el usuario
         user.preferences = this.preferences;
-
-        // Guardar sesión
         baseDatos.setSession(user);
         EventBus.$emit("usuarioLogueado", user);
 
-        this.$router.push("/");
-      } else {
-        // Verificar si existe un usuario con el email
-        const userByEmail = baseDatos.findUserByEmail(this.email);
-
-        if (!userByEmail) {
-          // Mensaje de cuenta no encontrada
-          this.errorMessage = "No encontramos una cuenta con ese correo, por favor regístrate primero.";
-          setTimeout(() => {
-            this.$router.push("/register"); // redirigir al registro
-          }, 1500); // pequeño delay para que vea el mensaje
+        if (user.role === "admin") {
+          this.$router.push("/admin");  // 🔥 Va al panel de admin
         } else {
-          // Mensaje de contraseña incorrecta
+          this.$router.push("/"); // Usuario normal
+        }
+      } else {
+        const userByEmail = baseDatos.findUserByEmail?.(this.email); // ⚠️ no tienes este método
+        if (!userByEmail) {
+          this.errorMessage = "No encontramos una cuenta con ese correo, por favor regístrate primero.";
+          setTimeout(() => this.$router.push("/register"), 1500);
+        } else {
           this.errorMessage = "Correo o contraseña incorrectos.";
         }
       }

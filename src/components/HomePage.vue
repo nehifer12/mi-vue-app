@@ -31,11 +31,11 @@
           <p>Descubre perfiles auténticos en tu área o en cualquier parte del mundo con un solo desliz.</p>
         </router-link>
 
-        <div class="feature-card">
+        <router-link to="/encuentra" class="feature-card">
           <img src="@/assets/encuentra.png" alt="Encuentra" class="feature-img" />
           <h2>❤️ Encuentra</h2>
           <p>Ya sea amistad, pareja o conexiones únicas, nuestra app es tu punto de encuentro.</p>
-        </div>
+        </router-link>
       </section>
 
     <!-- Footer -->
