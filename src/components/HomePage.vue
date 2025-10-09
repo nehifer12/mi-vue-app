@@ -17,13 +17,13 @@
       </p>
     </header>
 
-    <!-- Secciones principales -->
+      <!-- Secciones principales -->
       <section class="features">
-        <div class="feature-card">
+        <router-link to="/conecta" class="feature-card">
           <img src="@/assets/amigos.jpeg" alt="Conecta" class="feature-img" />
           <h2>💬 Conecta</h2>
           <p>Envía y recibe likes, inicia conversaciones y conoce a personas de tu ciudad y del mundo.</p>
-        </div>
+        </router-link>
 
         <router-link to="/explore" class="feature-card">
           <img src="@/assets/explora.jpeg" alt="Explora" class="feature-img" />

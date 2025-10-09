@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
+import baseDatos from "@/baseDatos";
 
 // Componentes
 import HomePage from "./components/HomePage.vue";
@@ -11,8 +12,8 @@ import Explore from "./components/Explore.vue";
 import CardSwiper from "@/components/CardSwiper.vue";                   
 import Mensajes from "./components/Mensajes.vue";
 import EncuentroPage from "./components/Encuentro.vue";
+import ConectaPage from "./components/ConectaPage.vue";
 
-import baseDatos from "@/baseDatos"; // 👈 necesario para leer la sesión
 
 Vue.use(Router);
 
@@ -33,7 +34,7 @@ const router = new Router({
       path: "/admin", 
       name: "AdminPanel", 
       component: () => import("@/components/AdminPanel.vue"), 
-      meta: { requiresAdmin: true }  // 👈 Aquí va el meta
+      meta: { requiresAdmin: true } 
     },
     { path: "/login", name: "login", component: LoginForm },
     { path: "/register", name: "register", component: RegisterForm },
@@ -42,7 +43,8 @@ const router = new Router({
     { path: "/explore", name: "explore", component: Explore },
     { path: "/cards", name: "cards", component: CardSwiper },
     { path: "/mensajes", name: "mensajes", component: Mensajes },
-    { path: "/encuentra", name: "encuentra", component: EncuentroPage }
+    { path: "/encuentra", name: "encuentra", component: EncuentroPage },
+    { path: "/conecta", name: "conecta", component: ConectaPage }
   ]
 });
 

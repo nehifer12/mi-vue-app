@@ -31,7 +31,7 @@ const baseDatos = {
       name: "Administrador",
       email: "nhfer@gmail.com",
       password: "gero123",
-      avatar: "https://i.pravatar.cc/150?img=1",
+      avatar: "https://randomuser.me/api/portraits/men/46.jpg",
       role: "admin"
     });
   }
