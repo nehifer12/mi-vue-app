@@ -1,17 +1,14 @@
 <template>
   <div class="home-page">
     <!-- Video de fondo -->
-    <video autoplay muted loop playsinline class="background-video">
-      <source src="@/assets/friends.mp4" type="video/mp4" />
-      Tu navegador no soporta videos.
-    </video>
+    <div class="background-image"></div>
 
     <!-- Capa oscura sobre el video -->
     <div class="overlay"></div>
 
     <!-- Encabezado -->
     <header class="hero">
-      <h1>Bienvenido a Tinder Clone ❤️🔥</h1>
+      <h1>Bienvenido a Tinder Clone🔥</h1>
       <p>
         Conoce nuevas personas, haz amigos, encuentra pareja o simplemente comparte momentos inolvidables.
       </p>
@@ -80,14 +77,17 @@ export default {
 </script>
 
 <style scoped>
-/* Video de fondo */
-.background-video {
+/* Imagen de fondo */
+.background-image {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  background-image: url('@/assets/fondos.img.png'); /* cambia por tu imagen */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   z-index: -2;
 }
 
@@ -324,5 +324,31 @@ export default {
 
 .social-icons a:hover {
   color: #e62e5c;
+}
+
+/* 📱 Ajustes responsivos */
+@media (max-width: 1200px) {
+  .feature-card { max-width: 45%; }
+}
+
+@media (max-width: 768px) {
+  .feature-card { max-width: 100%; }
+  .hero h1 { font-size: 2.2rem; }
+  .hero p { font-size: 1rem; }
+}
+
+@media (min-width: 1600px) {
+  .feature-card { max-width: 400px; }
+  .hero h1 { font-size: 4rem; }
+}
+
+/* 🖥️ Televisores o pantallas grandes */
+@media (min-width: 2000px) {
+  .features {
+    max-width: 1600px;
+  }
+  .feature-img {
+    height: 500px;
+  }
 }
 </style>

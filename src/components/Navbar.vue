@@ -113,51 +113,72 @@ export default {
 </script>
 
 <style scoped>
-/* Navbar */
+/* Navbar general */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  background: rgba(255, 255, 255, 0.95);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  border-radius: 0 0 15px 15px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  width: 90%; /* 🔹 Reducido el ancho */
+  max-width: 1200px;
+  margin: 10px auto; /* 🔹 Centrado */
+  background: rgba(255, 255, 255, 0.05); /* 🔹 Muy transparente, sin blur */
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
   padding: 10px 25px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  position: sticky;
+  top: 10px;
+  z-index: 100;
+  transition: all 0.3s ease;
 }
+
+.navbar:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Logo */
 .nav-left img {
-  height: 60px;
+  height: 55px;
+  transition: transform 0.3s;
 }
+
+.nav-left img:hover {
+  transform: scale(1.05);
+}
+
+/* Menú derecho */
 .nav-right {
   display: flex;
   align-items: center;
   gap: 20px;
 }
 
-/* Botones */
+/* Botones principales */
 .btn {
   padding: 10px 20px;
   border-radius: 25px;
-  font-weight: bold;
+  font-weight: 600;
   text-decoration: none;
   border: none;
   cursor: pointer;
-  transition: 0.3s;
+  transition: all 0.3s ease;
 }
+
 .btn-home, .btn-register {
-  background: #ff3366;
+  background: linear-gradient(45deg, #ff3366, #ff6699);
   color: #fff;
+  box-shadow: 0 4px 10px rgba(255, 51, 102, 0.3);
 }
+
 .btn-login {
-  background: #fff;
+  background: transparent;
   color: #ff3366;
   border: 2px solid #ff3366;
 }
+
 .btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
 }
 
 .btn-swipe {
@@ -173,10 +194,17 @@ export default {
   border-radius: 50%;
   border: 2px solid #ff3366;
   cursor: pointer;
+  transition: transform 0.3s ease;
 }
+.avatar:hover {
+  transform: scale(1.1);
+}
+
 .username {
   margin-left: 8px;
-  font-weight: bold;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
 
 /* Dropdown */
@@ -184,18 +212,22 @@ export default {
   position: absolute;
   right: 25px;
   top: 70px;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  background: rgba(255, 255, 255, 0.9); /* leve transparencia */
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
   overflow: hidden;
   z-index: 200;
 }
+
 .dropdown-item {
   display: block;
   padding: 10px 15px;
   color: #333;
   text-decoration: none;
+  font-weight: 500;
+  transition: background 0.2s;
 }
+
 .dropdown-item:hover {
   background: #ff3366;
   color: #fff;

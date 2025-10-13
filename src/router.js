@@ -2,6 +2,13 @@ import Vue from "vue";
 import Router from "vue-router";
 import baseDatos from "@/baseDatos";
 
+//Errores
+import error401 from "./viuew/error/error401.vue";
+import error403 from "./viuew/error/error403.vue";
+import error404 from "./viuew/error/error404.vue";
+import error500 from "./viuew/error/error500.vue";
+import error503 from "./viuew/error/error503.vue";
+
 // Componentes
 import HomePage from "./components/HomePage.vue";
 import LoginForm from "./components/LoginForm.vue";
@@ -44,7 +51,12 @@ const router = new Router({
     { path: "/cards", name: "cards", component: CardSwiper },
     { path: "/mensajes", name: "mensajes", component: Mensajes },
     { path: "/encuentra", name: "encuentra", component: EncuentroPage },
-    { path: "/conecta", name: "conecta", component: ConectaPage }
+    { path: "/conecta", name: "conecta", component: ConectaPage },
+    { path: "/:pathMatch(.*)*", name: "NotFound", component: Error404 },
+    { path: "/error/401", component: Error401 },
+    { path: "/error/403", component: Error403 },
+    { path: "/error/500", component: Error500 },
+    { path: "/error/503", component: Error503 },
   ]
 });
 
