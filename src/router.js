@@ -52,6 +52,7 @@ const router = new Router({
     { path: "/mensajes", name: "mensajes", component: Mensajes },
     { path: "/encuentra", name: "encuentra", component: EncuentroPage },
     { path: "/conecta", name: "conecta", component: ConectaPage },
+    { path: "/informacion", name: "MasInformacion", component: () => import("@/views/MasInformacion.vue"), },
     { path: "/:pathMatch(.*)*", name: "NotFound", component: error404 },
     { path: '/views/error/error401.vue', component: error401 },
     { path: '/views/error/error403.vue', component: error403 },

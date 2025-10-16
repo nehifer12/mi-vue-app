@@ -4,13 +4,62 @@
     <div class="nav-left">
       <img src="@/assets/logo.png" alt="Logo" class="nav-logo" />
 
-      <!-- 🔹 Menú alineado al logo -->
-      <div class="nav-links">
+      <!--  Menú desplegable -->
+      <div
+        class="nav-item"
+        @mouseenter="showDropdown = true"
+        @mouseleave="showDropdown = false"
+      >
         <router-link to="/productos" class="nav-link">Productos</router-link>
-        <router-link to="/informacion" class="nav-link">Más información</router-link>
-        <router-link to="/seguridad" class="nav-link">Seguridad</router-link>
-        <router-link to="/asistencia" class="nav-link">Asistencia</router-link>
 
+        <!-- Submenú -->
+        <transition name="fade">
+          <div v-if="showDropdown" class="dropdown-menu">
+            <router-link to="/productos/funciones-premium" class="dropdown-item">
+              Funciones Premium
+            </router-link>
+
+            <div class="dropdown-submenu">
+              <span class="dropdown-item submenu-title">
+                Niveles de suscripción ▾
+              </span>
+              <div class="submenu-items">
+                <router-link to="/productos/tinder-plus" class="dropdown-item">
+                  Tinder Plus®
+                </router-link>
+                <router-link to="/productos/tinder-gold" class="dropdown-item">
+                  Tinder Gold™
+                </router-link>
+                <router-link to="/productos/tinder-platinum" class="dropdown-item">
+                  Tinder Platinum™
+                </router-link>
+              </div>
+            </div>
+          </div>
+        </transition>
+      </div>
+
+      <router-link to="/informacion" class="nav-link">Más información</router-link>
+
+      <div
+        class="nav-item"
+        @mouseenter="showSeguridad = true"
+        @mouseleave="showSeguridad = false"
+      >
+        <router-link to="/seguridad" class="nav-link">Seguridad</router-link>
+        
+        <transition name="fade">
+          <div v-if="showSeguridad" class="dropdown-menu">
+            <router-link to="/seguridad/reglas" class="dropdowm-item">Reglas de Seguridad</router-link>
+            <router-link to="/seguridad/consejos" class="dropdown-item">Consejos de Seguridad</router-link>
+            <router-link to="/seguridad/politicas" class="dropdown-item">Politicas de Seguridad</router-link>
+            <router-link to="/seguridad/reportes" class="dropdown-item">Seguridad y Reportes</router-link>
+            <router-link to="/seguridad/proteccion" class="dropdown-item">Proteccion</router-link>
+          </div>
+        </transition>
+      </div>
+
+      <router-link to="/asistencia" class="nav-link">Asistencia</router-link>
         <!-- 🔹 Panel de descarga -->
         <div class="nav-link descarga" @click="toggleDescargaPanel">
           Descarga
@@ -22,7 +71,6 @@
           </div>
         </div>
       </div>
-    </div>
 
     <!-- 🔹 Menú derecho (sesión) -->
     <div class="nav-right">
@@ -58,6 +106,8 @@ export default {
   name: "AppNavbar",
   data() {
     return {
+      showDropdown: false,
+      showSeguridad: false,
       session: baseDatos.getSession(),
       usuarioActivo: null,
       menuOpen: false,
@@ -141,6 +191,11 @@ export default {
 .nav-links {
   display: flex;
   gap: 30px;
+}
+
+.nav-item {
+  position: relative;
+  display: inline-block;
 }
 
 .nav-link {
@@ -279,6 +334,65 @@ export default {
 }
 .dropdown-item:hover {
   background: #ff3366;
-  color: #fff;
+  color: #ef33a7;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%; 
+  left: 0;   
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  padding: 10px 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  min-width: 220px;
+}
+
+.dropdown-item {
+  padding: 8px 15px;
+  color: #333;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.dropdown-item:hover {
+  background-color: #f2f2f2;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.3s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
+.dropdown-submenu {
+  position: relative;
+  padding-top: 5px;
+}
+
+.submenu-title {
+  font-weight: bold;
+  display: block;
+  padding: 8px 20px;
+  cursor: pointer;
+}
+
+.submenu-items {
+  margin-left: 10px;
+  border-left: 2px solid #eee;
+}
+
+/* Animación suave */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
