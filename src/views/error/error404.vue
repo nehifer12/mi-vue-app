@@ -1,14 +1,14 @@
 <template>
   <div class="error-page">
-    <h1>401</h1>
-    <p>🔐 Tu sesión ha expirado o no tienes autorización.</p>
-    <img src="@/assets/errors/401.png" alt="No autorizado" class="error-img" />
-    <router-link to="/login" class="back-home">Iniciar sesión</router-link>
+    <h1>404</h1>
+    <p>Oops 😢 La página que buscas no existe.</p>
+    <img src="@/assets/404.jpg" alt="404 Not Found" class="error-img" />
+    <router-link to="/" class="back-home">Volver al inicio</router-link>
   </div>
 </template>
 
 <script>
-export default { name: "Error401" };
+export default { name: "ErrorPage404" };
 </script>
 
 <style scoped>

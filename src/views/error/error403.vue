@@ -1,14 +1,14 @@
 <template>
   <div class="error-page">
-    <h1>404</h1>
-    <p>Oops 😢 La página que buscas no existe.</p>
-    <img src="@/assets/errors/404.jpg" alt="404 Not Found" class="error-img" />
+    <h1>403</h1>
+    <p>🚫 No tienes permiso para acceder a esta sección.</p>
+    <img src="@/assets/403.jpg" alt="Acceso Denegado" class="error-img" />
     <router-link to="/" class="back-home">Volver al inicio</router-link>
   </div>
 </template>
 
 <script>
-export default { name: "Error404" };
+export default { name: "ErrorPage403" };
 </script>
 
 <style scoped>

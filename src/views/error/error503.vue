@@ -1,14 +1,14 @@
 <template>
   <div class="error-page">
-    <h1>403</h1>
-    <p>🚫 No tienes permiso para acceder a esta sección.</p>
-    <img src="@/assets/errors/403.jpg" alt="Acceso Denegado" class="error-img" />
+    <h1>503</h1>
+    <p>🌐 El servidor está temporalmente fuera de servicio.</p>
+    <img src="@/assets/503.jpg" alt="Servicio no disponible" class="error-img" />
     <router-link to="/" class="back-home">Volver al inicio</router-link>
   </div>
 </template>
 
 <script>
-export default { name: "Error403" };
+export default { name: "ErrorPage503" };
 </script>
 
 <style scoped>

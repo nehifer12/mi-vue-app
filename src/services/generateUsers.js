@@ -1,4 +1,3 @@
-// src/services/generateUsers.js
 export function generateUsers(count = 70) {
   const cities = [
     "Bogotá", "Medellín", "Cali", "Barranquilla", "Cartagena", "Bucaramanga", "Pereira",
@@ -9,20 +8,59 @@ export function generateUsers(count = 70) {
     "Rionegro", "Facatativá", "Chía", "Fusagasugá", "Zipaquirá", "Jamundí"
   ];
 
-  const interests = [
-    "Viajes", "Senderismo", "Camping", "Playa", "Montañismo", "Ciclismo", "Picnic",
-    "Escalada", "Surf", "Parques Naturales", "Jardinería", "Pasear Mascotas",
-    "Aventuras extremas", "Parapente", "Kayak",
-    "Fútbol", "Baloncesto", "Voleibol", "Natación", "Running", "CrossFit",
-    "Artes Marciales", "Boxeo", "Tenis", "Golf", "Patinaje", "Esquí acuático",
-    "Cine", "Música", "Videojuegos", "Lectura", "Cocina", "Baile", "Yoga", "Meditación",
-    "Teatro", "Artes Plásticas", "Pintura", "Fotografía", "Manualidades",
-    "Coleccionismo", "Escritura creativa", "Idiomas", "Tecnología", "Programación",
-    "Salir a comer", "Cafés", "Conciertos", "Bares", "Eventos culturales",
-    "Voluntariado", "Networking", "Juegos de mesa",
-    "Podcasts", "Criptomonedas", "Astrología", "Moda", "Fitness",
-    "Series y Streaming", "E-sports", "Inteligencia Artificial"
-  ];
+  const interestCategories = {
+    "Aventura y Naturaleza": {
+      actividades: [
+        "Viajes", "Senderismo", "Camping", "Playa", "Montañismo", "Ciclismo", "Picnic",
+        "Escalada", "Surf", "Parques Naturales", "Kayak", "Aventuras extremas", "Parapente"
+      ]
+    },
+    "Deportes": {
+      equipo: ["Fútbol", "Baloncesto", "Voleibol"],
+      individuales: ["Natación", "Running", "CrossFit", "Tenis", "Golf", "Patinaje", "Esquí acuático"],
+      combate: ["Artes Marciales", "Boxeo"],
+      fitness: ["Fitness", "Yoga"]
+    },
+    "Arte y Cultura": {
+      visuales: ["Pintura", "Fotografía", "Artes Plásticas", "Manualidades"],
+      escénicas: ["Teatro", "Baile"],
+      escritura: ["Escritura creativa", "Idiomas", "Lectura"],
+      entretenimiento: ["Cine", "Música", "Series y Streaming", "Videojuegos", "E-sports"]
+    },
+    "Estilo de Vida": {
+      bienestar: ["Meditación", "Jardinería", "Pasear Mascotas"],
+      social: ["Salir a comer", "Cafés", "Conciertos", "Bares", "Eventos culturales", "Juegos de mesa"],
+      moda_y_estilo: ["Moda", "Astrología"]
+    },
+    "Tecnología y Conocimiento": {
+      tech: ["Tecnología", "Programación", "Inteligencia Artificial", "Criptomonedas"],
+      aprendizaje: ["Podcasts", "Networking", "Idiomas"]
+    },
+    "Solidaridad y Comunidad": {
+      voluntariado: ["Voluntariado"]
+    },
+    "Coleccionismo y Hobbies": {
+      hobbies: ["Coleccionismo"]
+    }
+  };
+
+  const flattenInterests = (categories) =>
+    Object.values(categories).flatMap(sub => Object.values(sub).flat());
+
+  const mapInterestToCategory = (categories) => {
+    const map = {};
+    for (const [cat, subs] of Object.entries(categories)) {
+      for (const [subcat, items] of Object.entries(subs)) {
+        for (const item of items) {
+          map[item] = { category: cat, subcategory: subcat };
+        }
+      }
+    }
+    return map;
+  };
+
+  const interestsFlat = flattenInterests(interestCategories);
+  const interestMap = mapInterestToCategory(interestCategories);
 
   const maleNames = ["Carlos", "Juan", "Andrés", "Julián", "Mateo", "Santiago", "Camilo", "Felipe", "Esteban", "David"];
   const femaleNames = ["Laura", "Mariana", "Ana", "Valentina", "Carolina", "Isabella", "Paula", "Camila", "Natalia", "Andrea"];
@@ -42,8 +80,11 @@ export function generateUsers(count = 70) {
 
     const city = cities[Math.floor(Math.random() * cities.length)];
 
-    const shuffled = [...interests].sort(() => 0.5 - Math.random());
-    const userInterests = shuffled.slice(0, Math.floor(Math.random() * 3) + 3);
+    const shuffled = [...interestsFlat].sort(() => 0.5 - Math.random());
+    const selectedInterests = shuffled.slice(0, Math.floor(Math.random() * 3) + 3).map(interest => ({
+      name: interest,
+      ...interestMap[interest]
+    }));
 
     profiles.push({
       id: i + 1,
@@ -51,9 +92,9 @@ export function generateUsers(count = 70) {
       age: Math.floor(Math.random() * 65) + 16, // 16-80
       city,
       avatar,
-      interests: userInterests
+      interests: selectedInterests
     });
   }
 
-  return { profiles, cities, interests };
+  return { profiles, cities, interestCategories };
 }

@@ -1,14 +1,14 @@
 <template>
   <div class="error-page">
-    <h1>500</h1>
-    <p>💥 Algo salió mal en el servidor. Intenta más tarde.</p>
-    <img src="@/assets/errors/500.jpg" alt="Error Interno" class="error-img" />
-    <router-link to="/" class="back-home">Volver al inicio</router-link>
+    <h1>401</h1>
+    <p>🔐 Tu sesión ha expirado o no tienes autorización.</p>
+    <img src="@/assets/401.png" alt="No autorizado" class="error-img" />
+    <router-link to="/login" class="back-home">Iniciar sesión</router-link>
   </div>
 </template>
 
 <script>
-export default { name: "Error500" };
+export default { name: "ErrorPage401" };
 </script>
 
 <style scoped>

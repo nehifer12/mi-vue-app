@@ -54,18 +54,18 @@
 import Vue from "vue";
 import { generateUsers } from "@/services/generateUsers";
 
-/* --- Base de datos simulada con localStorage --- */
+/* --- Simulación de base de datos local --- */
 export const EventBus = new Vue();
 
 const baseDatos = {
   init() {
     let users = this.getUsers();
-    if (!users.some(u => u.role === "admin")) {
+    if (!users.some((u) => u.role === "admin")) {
       users.push({
         name: "Administrador",
         email: "admin@admin.com",
         password: "1234",
-        avatar: "https://i.pravatar.cc/150?img=1",
+        avatar: "https://randomuser.me/api/portraits/men/46.jpg",
         role: "admin",
       });
       this.saveUsers(users);
@@ -79,28 +79,12 @@ const baseDatos = {
   },
   addUser(user) {
     let users = this.getUsers();
-
-    // Si no existe ningún admin, lo creamos automáticamente
-    if (!users.some(u => u.role === "admin")) {
-      users.push({
-        name: "Administrador",
-        email: "nhfer@gmail.com",
-        password: "gero123",
-        avatar: "https://randomuser.me/api/portraits/men/46.jpg",
-        role: "admin",
-      });
-    }
-
-    users.push({ ...user, role: "user" }); // por defecto, nuevos usuarios son "user"
+    users.push({ ...user, role: "user" });
     this.saveUsers(users);
-  },
-  findUserByEmail(email) {
-    let users = this.getUsers();
-    return users.find(u => u.email === email);
   },
   findUser(email, password) {
     let users = this.getUsers();
-    return users.find(u => u.email === email && u.password === password);
+    return users.find((u) => u.email === email && u.password === password);
   },
   setSession(user) {
     localStorage.setItem("session", JSON.stringify(user));
@@ -116,7 +100,6 @@ const baseDatos = {
   },
 };
 
-/* --- Componente principal --- */
 export default {
   name: "AppExplore",
   data() {
@@ -185,7 +168,7 @@ export default {
       this.messagedUsers.push(this.selectedUser.id);
       localStorage.setItem("messagedUsers", JSON.stringify(this.messagedUsers));
       this.showNotification(
-        `💬 Enviando a ${this.selectedUser.name}: "${this.messageText}"`
+        `💬 Enviando mensaje a ${this.selectedUser.name}: "${this.messageText}"`
       );
       this.showModal = false;
       this.animateCard("up");
@@ -216,8 +199,17 @@ export default {
   },
   mounted() {
     baseDatos.init();
-    const { profiles } = generateUsers(20);
-    this.users = profiles;
+    const { profiles } = generateUsers(30);
+
+    // 🔥 Ajusta dinámicamente el avatar según género
+    this.users = profiles.map((p) => {
+      const isMale = p.name.split(" ")[0].endsWith("o") || p.avatar.includes("/men/");
+      const randomId = Math.floor(Math.random() * 80);
+      return {
+        ...p,
+        avatar: `https://randomuser.me/api/portraits/${isMale ? "men" : "women"}/${randomId}.jpg`,
+      };
+    });
   },
 };
 </script>

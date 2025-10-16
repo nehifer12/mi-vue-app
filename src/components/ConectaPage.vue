@@ -78,23 +78,21 @@ import { generateUsers } from "@/services/generateUsers.js";
 export default {
   name: "ConectaPage",
   data() {
-    // Importa todo desde generateUsers
     const { profiles, cities, interests } = generateUsers(70);
-
     return {
       searchName: "",
       selectedCity: "",
       selectedInterest: "",
-      ageRange: 18,
+      ageRange: 80,
       filtersApplied: false,
-      profiles,     // ✅ ahora si asigna la lista
-      cities,       // ✅ ciudades desde el generador
-      interests,    // ✅ intereses desde el generador
-      topProfiles: []
+      profiles,
+      cities,
+      interests,
+      topProfiles: [],
     };
   },
   created() {
-    this.shuffletopprofiles();
+    this.shuffleTopProfiles();
   },
   computed: {
     filteredProfiles() {
@@ -104,7 +102,7 @@ export default {
           : true;
         const byCity = this.selectedCity ? p.city === this.selectedCity : true;
         const byInterest = this.selectedInterest
-          ? p.interest.includes(this.selectedInterest) // 🔹 mejor usar includes
+          ? p.interests.includes(this.selectedInterest)
           : true;
         const byAge = p.age <= this.ageRange;
         return byName && byCity && byInterest && byAge;
@@ -131,7 +129,7 @@ export default {
         setTimeout(() => resetBtn.classList.remove("shake"), 500);
       }
     },
-    shuffletopprofiles() {
+    shuffleTopProfiles() {
       const shuffled = [...this.profiles].sort(() => Math.random() - 0.5);
       this.topProfiles = shuffled.slice(0, 5);
     },

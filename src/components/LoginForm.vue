@@ -5,10 +5,35 @@
 
     <div class="form-container">
       <h2>Iniciar sesión ❤️🔥</h2>
+
+      <!-- ✅ Un solo formulario -->
       <form @submit.prevent="login">
-        <!-- Campos únicos -->
-        <input v-model="email" type="email" placeholder="Correo electrónico" required />
-        <input v-model="password" type="password" placeholder="Contraseña" required />
+
+        <!-- Campo con autocompletado -->
+        <input
+          v-model="email"
+          type="email"
+          list="email-suggestions"
+          placeholder="Correo electrónico"
+          required
+        />
+
+        <!-- Lista de sugerencias -->
+        <datalist id="email-suggestions">
+          <option
+            v-for="(correo, index) in emailSuggestions"
+            :key="index"
+            :value="correo"
+          />
+        </datalist>
+
+        <!-- Campo contraseña -->
+        <input
+          v-model="password"
+          type="password"
+          placeholder="Contraseña"
+          required
+        />
 
         <!-- Mensaje dinámico -->
         <p v-if="errorMessage" class="error-text">{{ errorMessage }}</p>
@@ -52,6 +77,8 @@
     </div>
   </div>
 </template>
+
+
 <script>
 import baseDatos, { EventBus } from "@/baseDatos";
 
@@ -71,6 +98,12 @@ export default {
       },
       errorMessage: "" // mensaje de error
     };
+  },
+  created () {
+  if (baseDatos.getAllUsers) {
+      const users = baseDatos.getAllUsers();
+      this.emailSuggestions = users.map(u => u.email);
+    }
   },
   methods: {
     login() {

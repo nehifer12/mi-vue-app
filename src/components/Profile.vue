@@ -149,6 +149,7 @@
 
 <script>
 import { EventBus } from '@/baseDatos';
+import { generateUsers } from '@/services/generateUsers';
 
 export default {
   name: "UserProfile",
@@ -158,7 +159,7 @@ export default {
       user: {
         name: "",
         email: "",
-        avatar: "https://i.pravatar.cc/150?img=3", // avatar por defecto
+        avatar: "https://randomuser.me/api/portraits/neutral/3.jpg", // avatar neutro por defecto
         gender: "",
         age: "",
         city: "",
@@ -170,7 +171,10 @@ export default {
         likes: "",
         preferences: []
       },
-      newPref: ""
+      newPref: "",
+      generatedUsers: [],
+      availableCities: [],
+      availableInterests: []
     };
   },
   computed: {
@@ -188,19 +192,26 @@ export default {
     if (loggedUser) {
       this.user = JSON.parse(loggedUser);
     }
+
+    // Generar lista de usuarios aleatorios
+    const { profiles, cities, interests } = generateUsers(70);
+    this.generatedUsers = profiles;
+    this.availableCities = cities;
+    this.availableInterests = interests;
+
     this.updateAvatar();
 
     EventBus.$on("session-changed", (user) => {
-      if(user) {
+      if (user) {
         this.user = user;
       }
-    })
+    });
   },
   methods: {
     saveProfile() {
       localStorage.setItem("loggedUser", JSON.stringify(this.user));
       EventBus.$emit("perfil-actualizado", this.user);
-      this.editing = false; // Ocultar formulario y mostrar card
+      this.editing = false;
     },
     addPreference() {
       if (this.newPref.trim() !== "") {
@@ -212,12 +223,27 @@ export default {
       }
     },
     updateAvatar() {
+      // Asigna avatar según el género usando randomuser.me
       if (this.user.gender === "hombre") {
-        this.user.avatar = "https://i.pravatar.cc/150?img=12"; // avatar hombre
+        const id = Math.floor(Math.random() * 80); // hay 0–99 disponibles
+        this.user.avatar = `https://randomuser.me/api/portraits/men/${id}.jpg`;
       } else if (this.user.gender === "mujer") {
-        this.user.avatar = "https://i.pravatar.cc/150?img=47"; // avatar mujer
+        const id = Math.floor(Math.random() * 80);
+        this.user.avatar = `https://randomuser.me/api/portraits/women/${id}.jpg`;
       } else {
-        this.user.avatar = "https://i.pravatar.cc/150?img=3"; // neutro
+        const id = Math.floor(Math.random() * 80);
+        this.user.avatar = `https://randomuser.me/api/portraits/lego/${id % 10}.jpg`; // neutro tipo lego 😄
+      }
+    },
+    loadRandomUser() {
+      const random = this.generatedUsers[Math.floor(Math.random() * this.generatedUsers.length)];
+      if (random) {
+        this.user.name = random.name;
+        this.user.age = random.age;
+        this.user.city = random.city;
+        this.user.avatar = random.avatar;
+        this.user.preferences = random.interests;
+        this.user.gender = random.avatar.includes("/men/") ? "hombre" : "mujer";
       }
     }
   }
@@ -243,18 +269,16 @@ export default {
   z-index: -1;
 }
 .profile-card {
-  background: #fff;
+  background: linear-gradient(145deg, #ffffff, #ffe4ec);
   color: #333;
-  padding: 30px;
-  border-radius: 20px;
-  box-shadow: 0px 8px 20px rgba(0,0,0,0.25);
-  text-align: center;
-  margin-top: 50px;
-  width: 350px;
-  transition: transform 0.2s ease;
+  padding: 35px;
+  border-radius: 25px;
+  box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
 }
 .profile-card:hover {
-  transform: scale(1.02);
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
 }
 .avatar-container {
   display: flex;
@@ -262,26 +286,27 @@ export default {
   margin-bottom: 15px;
 }
 .profile-avatar {
-  width: 120px;
-  height: 120px;
+  width: 130px;
+  height: 130px;
   border-radius: 50%;
-  border: 4px solid #ff3366;
-  box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
+  border: 4px solid;
+  border-image-slice: 1;
+  border-width: 4px;
+  border-image-source: linear-gradient(45deg, #ff3366, #ff4b2b);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+}
+.profile-avatar:hover {
+  transform: scale(1.1);
 }
 .bio {
   font-style: italic;
   color: #777;
 }
 .edit-section {
-  margin-top: 30px;
-  width: 450px; /* un poco más ancho */
-  background: linear-gradient(135deg, #ffffff, #fce4ec);
-  color: #333;
-  padding: 35px; /* más padding interno para que no se peguen los inputs */
-  border-radius: 20px;
-  box-shadow: 0px 8px 25px rgba(0,0,0,0.25);
-  border: 2px solid transparent;
-  background-clip: padding-box;
+  background: linear-gradient(145deg, #fff, #ffe4f0);
+  border-radius: 25px;
+  box-shadow: 0 12px 25px rgba(0,0,0,0.2);
 }
 .edit-section input,
 .edit-section select,

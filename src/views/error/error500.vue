@@ -1,14 +1,14 @@
 <template>
   <div class="error-page">
-    <h1>503</h1>
-    <p>🌐 El servidor está temporalmente fuera de servicio.</p>
-    <img src="@/assets/errors/503.jpg" alt="Servicio no disponible" class="error-img" />
+    <h1>500</h1>
+    <p>💥 Algo salió mal en el servidor. Intenta más tarde.</p>
+    <img src="@/assets/500.jpg" alt="Error Interno" class="error-img" />
     <router-link to="/" class="back-home">Volver al inicio</router-link>
   </div>
 </template>
 
 <script>
-export default { name: "Error503" };
+export default { name: "ErrorPage500" };
 </script>
 
 <style scoped>

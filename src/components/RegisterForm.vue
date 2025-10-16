@@ -30,8 +30,27 @@
         <input v-model="email" type="email" placeholder="Correo electrónico" required />
         <input v-model="password" type="password" placeholder="Contraseña" required />
         <input v-model="phone" type="tel" placeholder="Teléfono" />
-        <input v-model="city" type="text" placeholder="Ciudad" />
         <input v-model="birthdate" type="date" placeholder="Fecha de nacimiento" />
+
+        <div class="autocomplete">
+          <input
+            v-model="city"
+            type="text"
+            placeholder="Ciudad"
+            @input="filtrarCiudades"
+            @focus="mostrarSugerencias = true"
+            @blur="ocultarSugerencias"
+          />
+          <ul v-if="mostrarSugerencias && ciudadesFiltradas.length" class="suggestions">
+            <li
+              v-for="(c, index) in ciudadesFiltradas"
+              :key="index"
+              @mousedown.prevent="seleccionarCiudad(c)"
+            >
+              {{ c }}
+            </li>
+          </ul>
+        </div>
 
         <!-- Avatar dinámico -->
         <div class="avatar-section">
@@ -108,7 +127,27 @@ export default {
       return this.avatarMap[this.gender] || "https://i.pravatar.cc/150?img=50";
     }
   },
+  mounted() {
+    const users = baseDatos.getUsers();
+    this.todasLasCiudades = [
+      ...new Set(users.map(u => u.city).filter(c => c && c.trim() !== ""))
+    ];
+  },
   methods: {
+    filtrarCiudades() {
+      const term = this.city.toLowerCase();
+      this.ciudadesFiltradas = this.todasLasCiudades.filter(c =>
+        c.toLowerCase().startsWith(term)
+      );
+    },
+    seleccionarCiudad(ciudad) {
+      this.city = ciudad;
+      this.mostrarSugerencias = false;
+    },
+    ocultarSugerencias() {
+      setTimeout(() => (this.mostrarSugerencias = false), 150);
+    },
+
     register() {
       let users = baseDatos.getUsers();
       const exists = users.find(u => u.email === this.email);
@@ -144,6 +183,34 @@ export default {
 </script>
 
 <style>
+/* Autocompletar */
+.autocomplete {
+  position: relative;
+  width: 100%;
+}
+.suggestions {
+  position: absolute;
+  background: white;
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  margin-top: 2px;
+  list-style: none;
+  padding: 0;
+  z-index: 50;
+  max-height: 160px;
+  overflow-y: auto;
+}
+.suggestions li {
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.suggestions li:hover {
+  background: #ffebef;
+  color: #ff3366;
+}
+
 select {
   display: block;
   width: 100%;

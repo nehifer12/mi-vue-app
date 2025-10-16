@@ -3,11 +3,11 @@ import Router from "vue-router";
 import baseDatos from "@/baseDatos";
 
 //Errores
-import error401 from "./viuew/error/error401.vue";
-import error403 from "./viuew/error/error403.vue";
-import error404 from "./viuew/error/error404.vue";
-import error500 from "./viuew/error/error500.vue";
-import error503 from "./viuew/error/error503.vue";
+import error401 from "./views/error/error401.vue";
+import error403 from "./views/error/error403.vue";
+import error404 from "./views/error/error404.vue";
+import error500 from "./views/error/error500.vue";
+import error503 from "./views/error/error503.vue";
 
 // Componentes
 import HomePage from "./components/HomePage.vue";
@@ -52,11 +52,11 @@ const router = new Router({
     { path: "/mensajes", name: "mensajes", component: Mensajes },
     { path: "/encuentra", name: "encuentra", component: EncuentroPage },
     { path: "/conecta", name: "conecta", component: ConectaPage },
-    { path: "/:pathMatch(.*)*", name: "NotFound", component: Error404 },
-    { path: "/error/401", component: Error401 },
-    { path: "/error/403", component: Error403 },
-    { path: "/error/500", component: Error500 },
-    { path: "/error/503", component: Error503 },
+    { path: "/:pathMatch(.*)*", name: "NotFound", component: error404 },
+    { path: '/views/error/error401.vue', component: error401 },
+    { path: '/views/error/error403.vue', component: error403 },
+    { path: '/views/error/error500.vue', component: error500 },
+    { path: '/views/error/error503.vue', component: error503 },
   ]
 });
 
