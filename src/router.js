@@ -20,6 +20,7 @@ import CardSwiper from "@/components/CardSwiper.vue";
 import Mensajes from "./components/Mensajes.vue";
 import EncuentroPage from "./components/Encuentro.vue";
 import ConectaPage from "./components/ConectaPage.vue";
+import AsistenciaPage from "@/views/AsistenciaPage.vue";
 
 
 Vue.use(Router);
@@ -53,6 +54,7 @@ const router = new Router({
     { path: "/encuentra", name: "encuentra", component: EncuentroPage },
     { path: "/conecta", name: "conecta", component: ConectaPage },
     { path: "/informacion", name: "MasInformacion", component: () => import("@/views/MasInformacion.vue"), },
+    { path: "/asistenciaPage", name: "AsistenciaPage", component: AsistenciaPage,  meta: { hideNavbar: true }},
     { path: "/:pathMatch(.*)*", name: "NotFound", component: error404 },
     { path: '/views/error/error401.vue', component: error401 },
     { path: '/views/error/error403.vue', component: error403 },

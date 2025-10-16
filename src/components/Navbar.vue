@@ -59,7 +59,7 @@
         </transition>
       </div>
 
-      <router-link to="/asistencia" class="nav-link">Asistencia</router-link>
+      <router-link to="/asistenciaPage" class="nav-link">Asistencia</router-link>
         <!-- 🔹 Panel de descarga -->
         <div class="nav-link descarga" @click="toggleDescargaPanel">
           Descarga
